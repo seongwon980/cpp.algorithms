@@ -4,6 +4,7 @@
 
 int main() {
     std::cout << "Hello World!!!!!\n";
-    std::cout << "This is the second line!";
+    std::cout << "This is the second line!\n";
+    std::cout << "This is the third line!!!\n";
     return 0;
 }
