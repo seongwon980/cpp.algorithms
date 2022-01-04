@@ -1,10 +1,14 @@
 #include <stdio.h>
 
-int main(void)
-{
-    int arr[3] = {1, 2, 3};
-    printf("arr : %p\n", arr);
-    printf("arr[0] : %p\n", &arr[0]);
-    
+void printArray(int* pArr, int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d\n", pArr[i]);
+    }
+}
+int main(void) {
+    const char *arr[3] = {"Hello", "Why?", "GOGO"};
+    for (int i = 0; i < 3; i++) {
+        printf("%s\n", arr[i]);
+    }
     return 0;
 }
