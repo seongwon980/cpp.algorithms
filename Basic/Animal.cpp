@@ -1,10 +1,7 @@
-#include <stdio.h>
+#include <iostream>
+using namespace std;
 
-int main(void)
-{
-    int arr[3] = {1, 2, 3};
-    printf("arr : %p\n", arr);
-    printf("arr[0] : %p\n", &arr[0]);
-    
+int main(void) {
+    cout << "Hello!!"<<endl;
     return 0;
 }
