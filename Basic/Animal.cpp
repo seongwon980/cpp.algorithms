@@ -1,20 +1,31 @@
 #include <iostream>
 using namespace std;
 
-<<<<<<< HEAD
-void printArray(int* pArr, int size) {
-    for (int i = 0; i < size; i++) {
-        printf("%d\n", pArr[i]);
+void MaxAndMin(int *arr, int size, int **maxPtr, int **minPtr) {
+    int *tempMaxPtr;
+    int *tempMinPtr;
+    int i;
+
+    tempMaxPtr = &arr[0];
+    tempMinPtr = &arr[0];
+
+    for (int i = 1; i < size; i++) {
+        if (arr[i] > *tempMaxPtr)
+            tempMaxPtr = &arr[i];
+        if (arr[i] < *tempMinPtr)
+            tempMinPtr = &arr[i];
     }
+
+    *maxPtr = tempMaxPtr;
+    *minPtr = tempMinPtr;
 }
 int main(void) {
-    const char *arr[3] = {"Hello", "Why?", "GOGO"};
-    for (int i = 0; i < 3; i++) {
-        printf("%s\n", arr[i]);
-    }
-=======
-int main(void) {
-    cout << "Hello!!"<<endl;
->>>>>>> cf8c225be1e31ab43aaa5b5af9ac10001f2712ed
+    int *maxPtr;
+    int *minPtr;
+    int arr[5] = {1, 2, 3, 4, 5};
+    MaxAndMin(arr, 5, &maxPtr, &minPtr);
+    
+    printf("Maximun value : %d\n", *maxPtr);
+    printf("Minimum value : %d\n", *minPtr);
     return 0;
 }
