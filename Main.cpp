@@ -1,27 +1,36 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
-int main(void) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-
-    const int COUNT = 9;
-    int arr[COUNT];
-
-    for (int i = 0; i < COUNT; i++) {
-        cin >> arr[i];
-    }
-
-    int max = arr[0];
-    int maxIndex = 0;
-    for (int i = 1; i < COUNT; i++) {
-        if (arr[i] > max) {
-            max = arr[i];
-            maxIndex = i;
-        }
-    }
+class Person {
+    private:
+        char* name;
+        int age;
     
-    cout << max << ' ' << maxIndex + 1 << "\n";
+    public:
+        Person(const char* myname, int myage) {
+            int len = strlen(myname) + 1;
+            name = new char[len];
+            strcpy(name, myname);
+            age = myage;
+        }
+
+        void ShowPersonInfo() const {
+            cout << "이름: " << name << endl;
+            cout << "나이: " << age<< endl;
+        }
+
+        ~Person() {
+            delete []name;
+            cout << "called destructor!" << endl;
+        }
+};
+
+int main(void) {
+    Person man1("Cho Seongwon", 24);
+    Person man2("Cho Seongjun", 22);
+    man1.ShowPersonInfo();
+    man2.ShowPersonInfo();
+    
     return 0;
 }
