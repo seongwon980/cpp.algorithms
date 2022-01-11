@@ -1,10 +1,26 @@
 #include <iostream>
 using namespace std;
 
+class Person {
+    public:
+        int studentID;
+    
+    public:
+        Person(int studentID) {
+            this -> studentID = studentID;
+        }
+
+        void Show() {
+            cout << "ID: " << studentID << endl;
+        }
+};
+
 int main(void) {
-    char arr[50] = {'a', 'b', 'c', 'd', 'e'};
-    cout << sizeof(arr);
-    for (int i = 0; i < 50; i++)
-        cout << (arr[i] == 'b');
-    return 0;
+    Person p1(2017147573);
+    Person p2 = p1;
+
+    p1.studentID = 2018;
+    p1.Show();
+    p2.Show();
+
 }
