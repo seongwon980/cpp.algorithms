@@ -2,13 +2,12 @@
 using namespace std;
 
 int main(void) {
-    const int MAX_LENGTH = 80;
     int num;
     cin >> num;
+    char input[80];
 
-    const char* arr[num];
     for (int i = 0; i < num; i++)
-        cin >> arr[i];
+        cin >> input;
 
 
     return 0;
