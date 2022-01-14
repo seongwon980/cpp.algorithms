@@ -4,11 +4,6 @@ using namespace std;
 
 const int NAME_LEN = 20;
 
-void ShowMenu(void);
-void MakeAccount(void);
-void DepositMoney(void);
-void WithdrawMoney(void);
-void ShowAllAccountInfo(void);
 
 enum {MAKE=1, DEPOSIT, WITHDRAW, INQUIRE, EXIT};
 
@@ -44,10 +39,10 @@ class Account {
             return money;
         }
 
-        void ShowAccountInfo() {
-            cout << "°èÁÂID: " << accountID << endl;
-            cout << "ÀÌ¸§: " << customerName << endl;
-            cout << "ÀÜ¾×: " << balance << endl;
+        void ShowAccountInfo() const {
+            cout << "ê³„ì¢ŒID: " << accountID << endl;
+            cout << "ì´ë¦„: " << customerName << endl;
+            cout << "ìž”ì•¡: " << balance << endl;
         }
 
         ~Account() {
@@ -55,36 +50,50 @@ class Account {
         }
 };
 
-Account* accountArr[100];
-int accountNum = 0;
+class AccountHandler {
+    private:
+        Account* accountArr[100];
+        int accountNum;
+    
+    public:
+        AccountHandler() : accountNum(0) {}
+        void ShowMenu(void) const;
+        void MakeAccount(void);
+        void DepositMoney(void);
+        void WithdrawMoney(void);
+        void ShowAllAccountInfo(void) const;
+        ~AccountHandler() {
+            for (int i = 0; i < accountNum; i++)
+                delete accountArr[i];
+        }
+};
+
 
 int main(void) {
+    AccountHandler manager;
     int choice;
+
     while(true) {
-        ShowMenu();
-        cout << "¼±ÅÃ: ";;
+        manager.ShowMenu();
+        cout << "ì„ íƒ: ";;
         cin >> choice;
         cout << endl;
 
         switch(choice) {
             case MAKE:
-                MakeAccount();
+                manager.MakeAccount();
                 break;
             case DEPOSIT:
-                DepositMoney();
+                manager.DepositMoney();
                 break;
             case WITHDRAW:
-                WithdrawMoney();
+                manager.WithdrawMoney();
                 break;
             case INQUIRE:
-                ShowAllAccountInfo();
+                manager.ShowAllAccountInfo();
                 break;
             case EXIT:
-                for (int i = 0; i < accountNum; i++) {
-                    delete accountArr[i];
-                }
                 return 0;
-            
             default:
                 cout << "Illegal selection.." << endl;
         }
@@ -92,67 +101,67 @@ int main(void) {
     return 0;
 }
 
-void ShowMenu(void) {
+void AccountHandler::ShowMenu(void) const {
     cout << "----- Menu -----" << endl;
-    cout << "1. °èÁÂ°³¼³" << endl;
-    cout << "2. ÀÔ±Ý" << endl;
-    cout << "3. Ãâ±Ý" << endl;
-    cout << "4. °èÁÂÁ¤º¸ ÀüÃ¼ Ãâ·Â" << endl;
-    cout << "5. ÇÁ·Î±×·¥ Á¾·á" << endl;
+    cout << "1. ê³„ì¢Œê°œì„¤" << endl;
+    cout << "2. ìž…ê¸ˆ" << endl;
+    cout << "3. ì¶œê¸ˆ" << endl;
+    cout << "4. ê³„ì¢Œì •ë³´ ì „ì²´ ì¶œë ¥" << endl;
+    cout << "5. í”„ë¡œê·¸ëž¨ ì¢…ë£Œ" << endl;
 }
 
-void MakeAccount(void) {
+void AccountHandler::MakeAccount(void) {
     int id;
     char name[NAME_LEN];
     int balance;
 
-    cout << "[°èÁÂ°³¼³]" << endl;
-    cout << "°èÁÂ ID: "; cin >> id;
-    cout << "ÀÌ¸§: "; cin >> name;
-    cout << "ÀÔ±Ý¾×: "; cin >> balance;
+    cout << "[ê³„ì¢Œê°œì„¤]" << endl;
+    cout << "ê³„ì¢Œ ID: "; cin >> id;
+    cout << "ì´ë¦„: "; cin >> name;
+    cout << "ìž…ê¸ˆì•¡: "; cin >> balance;
     cout << endl;
 
     accountArr[accountNum++] = new Account(id, balance, name);
 }
 
-void DepositMoney(void) {
+void AccountHandler::DepositMoney(void) {
     int money;
     int id;
-    cout << "[ÀÔ±Ý]" << endl;
-    cout << "°èÁÂ ID: "; cin >> id;
-    cout << "ÀÔ±Ý¾×: "; cin >> money;
+    cout << "[ìž…ê¸ˆ]" << endl;
+    cout << "ê³„ì¢Œ ID: "; cin >> id;
+    cout << "ìž…ê¸ˆì•¡: "; cin >> money;
 
     for (int i = 0; i < accountNum; i++) {
         if (accountArr[i]->GetAccountID() == id) {
             accountArr[i]->Deposit(money);
-            cout << "ÀÔ±Ý¿Ï·á" << endl << endl;
+            cout << "ìž…ê¸ˆì™„ë£Œ" << endl << endl;
             return;
         }
     }
     cout << "Invalid ID..." << endl << endl;
 }
 
-void WithdrawMoney(void) {
+void AccountHandler::WithdrawMoney(void) {
     int money;
     int id;
-    cout << "[Ãâ±Ý]" << endl;
-    cout << "°èÁÂ ID: "; cin >> id;
-    cout << "Ãâ±Ý¾×: "; cin >> money;
+    cout << "[ì¶œê¸ˆ]" << endl;
+    cout << "ê³„ì¢Œ ID: "; cin >> id;
+    cout << "ì¶œê¸ˆì•¡: "; cin >> money;
 
     for (int i = 0; i < accountNum; i++) {
         if (accountArr[i]->GetAccountID() == id) {
             if (accountArr[i]->Withdraw(money) == 0) {
-                cout << "ÀÜ¾×ºÎÁ·" << endl << endl;
+                cout << "ìž”ì•¡ë¶€ì¡±" << endl << endl;
                 return;
             }
-            cout << "Ãâ±Ý¿Ï·á" << endl;
+            cout << "ì¶œê¸ˆì™„ë£Œ" << endl;
             return;
         }
     }
     cout << "Invalid ID..." << endl << endl;
 }
 
-void ShowAllAccountInfo(void) {
+void AccountHandler::ShowAllAccountInfo(void) const{
     for (int i = 0; i < accountNum; i++) {
         accountArr[i]->ShowAccountInfo();
         cout << endl;
