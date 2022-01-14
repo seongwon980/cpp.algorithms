@@ -7,16 +7,16 @@ namespace COMP_POS {
     void ShowPositionInfo(int pos) {
         switch(pos) {
             case CLERK:
-                cout << "사원" << endl;
+                cout << "1" << endl;
                 break;
             case SENIOR:
-                cout << "주임" << endl;
+                cout << "2" << endl;
                 break;
             case ASSIST:
-                cout << "대리" << endl;
+                cout << "3" << endl;
                 break;
             case MANAGER:
-                cout << "과장" << endl;
+                cout << "4" << endl;
                 break;
         }
     }
@@ -40,21 +40,32 @@ class NameCard {
                 strcpy(phone, _phone);
             }
         
+        NameCard(const NameCard &copy)
+            : position(copy.position) {
+                cout << "User-defined copy constructor called!" << endl;
+                name = new char[strlen(copy.name) + 1];
+                company = new char[strlen(copy.company) + 1];
+                phone = new char[strlen(copy.phone) + 1];
+                
+                strcpy(name, copy.name);
+                strcpy(company, copy.company);
+                strcpy(phone, copy.phone);
+            }
         void ShowNameCardInfo() {
-            cout << "이름: " << name << endl;
-            cout << "회사: " << company << endl;
-            cout << "전화번호: " << phone << endl;
-            cout << "직급: "; COMP_POS::ShowPositionInfo(position);
+            cout << "Name: " << name << endl;
+            cout << "Company: " << company << endl;
+            cout << "Phone: " << phone << endl;
+            cout << "Status: "; COMP_POS::ShowPositionInfo(position);
             cout << endl;
         }
 };
 
 int main(void) {
     NameCard manClerk("Lee", "ABCEng", "010-1111-2222", COMP_POS::CLERK);
+    NameCard copy1 = manClerk;
     NameCard manSENIOR("Hong", "OrangeEng", "010-3333-4444", COMP_POS::SENIOR);
-    NameCard manAssist("Kim", "SoGoodComp", "010-5555-6666", COMP_POS::ASSIST);
-    manClerk.ShowNameCardInfo();
-    manSENIOR.ShowNameCardInfo();
-    manAssist.ShowNameCardInfo();
+    NameCard copy2 = manSENIOR;
+    copy1.ShowNameCardInfo();
+    copy2.ShowNameCardInfo();
     return 0;
 }

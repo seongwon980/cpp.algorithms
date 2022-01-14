@@ -25,6 +25,11 @@ class Account {
                 strcpy(customerName, cName);
             }
         
+        Account(const Account &copy)
+            : accountID(copy.accountID), balance(copy.balance) {
+                customerName = new char[strlen(copy.customerName) + 1];
+                strcpy(customerName, copy.customerName);
+            }
         int GetAccountID() const {
             return accountID;
         }

@@ -1,57 +1,37 @@
 #include <iostream>
-#include <cstring>
 using namespace std;
 
-int Average(double* arr, int size) {
-    double sum = 0;
-    for (int i = 0; i < size; i++) {
-        sum += arr[i];
-    }
-    return sum / size;
-}
+bool IsArithmeticProgression(int num) {
+    if (num < 100) return true;
+    int first_digit = num % 10;
+    num /= 10;
+    int second_digit = num % 10;
+    num /= 10;
 
-int CountGreaterThan(double* arr, int size, double average) {
-    /*
-        Count the number of elements greater than 'average' and
-        return it.
-    */
-    int count = 0;
-    for (int i = 0; i < size; i++) {
-        if (arr[i] > average) {
-            count += 1;
-        }
+    int d = second_digit - first_digit;
+
+    while (num > 0) {
+        /*
+            Iteratively move two pointers and compare the difference with
+            'd'.
+        */
+        first_digit = second_digit;
+        second_digit = num % 10;
+        if (second_digit - first_digit != d)
+            return false;
+        num /= 10;
     }
-    return count;
+    return true;
 }
 
 int main(void) {
-    int num_of_tc;
-    int num_of_students;
-    int count_above_average;
-    double students[1000];
-    double sum;
-    double average;
-    double ratio;
+    int num;
+    int count = 0;
+    cin >> num;
 
-    cin >> num_of_tc;
-    for (int i = 0; i < num_of_tc; i++) {
-        cin >> num_of_students;
-        for (int j = 0; j < num_of_students; j++) {
-            cin >> students[j];
-        }
-        average = Average(students, num_of_students);
-        // cout << "average: " << average << endl;
-        count_above_average = CountGreaterThan(students, num_of_students, average);
-        // cout << "count_above_average: " << count_above_average << endl;
-        ratio = 100 * (double)count_above_average / (double)num_of_students;
-
-        // Set cout precision and print the result
-
-        cout << fixed;
-        cout.precision(3);
-        cout << ratio << "%" << endl;
+    for (int i = 1; i <= num; i++) {
+        if (IsArithmeticProgression(i)) count++;
     }
-
-
+    cout << count;
     return 0;
 }
