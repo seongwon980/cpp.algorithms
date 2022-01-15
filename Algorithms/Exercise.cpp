@@ -23,7 +23,7 @@ int main(void) {
             if (i <= size - 2 && input_str[i + 1] == 'z' && input_str[i + 2] == '=')
                 i += 2;
             else if (i <= size - 1 && input_str[i + 1] == '-')
-                i += 1;
+                i += 1 ;
         }  else if (input_str[i])
     }
 }
