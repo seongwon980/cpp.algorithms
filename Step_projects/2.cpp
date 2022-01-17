@@ -6,6 +6,8 @@ const int NAME_LEN = 20;
 
 
 enum {MAKE=1, DEPOSIT, WITHDRAW, INQUIRE, EXIT};
+enum {LEVEL_A = 7, LEVEL_B = 4, LEVEL_C = 2};
+enum {NORMAL = 1, CREDIT = 2};
 
 class Account {
     private:
@@ -14,7 +16,7 @@ class Account {
         char* customerName;
     
     public:
-        Account(int id, int bal, char* cName)
+        Account(int id, int bal, const char* cName)
             : accountID(id), balance(bal) {
                 customerName = new char[strlen(cName) + 1];
                 strcpy(customerName, cName);
@@ -29,7 +31,7 @@ class Account {
             return accountID;
         }
 
-        void Deposit(int money) {
+        virtual void Deposit(int money) {
             balance += money;
         }
 
@@ -40,9 +42,9 @@ class Account {
         }
 
         void ShowAccountInfo() const {
-            cout << "ê³„ì¢ŒID: " << accountID << endl;
-            cout << "ì´ë¦„: " << customerName << endl;
-            cout << "ìž”ì•¡: " << balance << endl;
+            cout << "°èÁÂID: " << accountID << endl;
+            cout << "ÀÌ¸§: " << customerName << endl;
+            cout << "ÀÜ¾×: " << balance << endl;
         }
 
         ~Account() {
@@ -50,6 +52,31 @@ class Account {
         }
 };
 
+class NormalAccount : public Account {
+    private:
+        int interestRate;
+    public:
+        NormalAccount(int _accountID, int _balance, const char* _customerName, int _interestRate)
+            : Account(_accountID, _balance, _customerName), interestRate(_interestRate) {}
+
+        virtual void Deposit(int money) {
+            Account::Deposit(money);
+            Account::Deposit(money * (interestRate / 100.0));
+        }
+};
+
+class HighCreditAccount : public NormalAccount {
+    private:
+        int specialRate;
+    public:
+        HighCreditAccount(int _accountID, int _balance, const char* _customerName, int _interestRate, int _specialRate)
+            : NormalAccount(_accountID, _balance, _customerName, _interestRate), specialRate(_specialRate) {}
+        
+        virtual void Deposit(int money) {
+            NormalAccount::Deposit(money);
+            Account::Deposit(money * (specialRate / 100.0));
+        }
+};
 class AccountHandler {
     private:
         Account* accountArr[100];
@@ -66,6 +93,10 @@ class AccountHandler {
             for (int i = 0; i < accountNum; i++)
                 delete accountArr[i];
         }
+    
+    protected:
+        void MakeNormalAccount(void);
+        void MakeCreditAccount(void);
 };
 
 
@@ -75,7 +106,7 @@ int main(void) {
 
     while(true) {
         manager.ShowMenu();
-        cout << "ì„ íƒ: ";;
+        cout << "¼±ÅÃ: ";;
         cin >> choice;
         cout << endl;
 
@@ -103,38 +134,81 @@ int main(void) {
 
 void AccountHandler::ShowMenu(void) const {
     cout << "----- Menu -----" << endl;
-    cout << "1. ê³„ì¢Œê°œì„¤" << endl;
-    cout << "2. ìž…ê¸ˆ" << endl;
-    cout << "3. ì¶œê¸ˆ" << endl;
-    cout << "4. ê³„ì¢Œì •ë³´ ì „ì²´ ì¶œë ¥" << endl;
-    cout << "5. í”„ë¡œê·¸ëž¨ ì¢…ë£Œ" << endl;
+    cout << "1. °èÁÂ°³¼³" << endl;
+    cout << "2. ÀÔ±Ý" << endl;
+    cout << "3. Ãâ±Ý" << endl;
+    cout << "4. °èÁÂÁ¤º¸ ÀüÃ¼ Ãâ·Â" << endl;
+    cout << "5. ÇÁ·Î±×·¥ Á¾·á" << endl;
 }
 
 void AccountHandler::MakeAccount(void) {
+    int select;
+    cout << "[°èÁÂÁ¾·ù¼±ÅÃ]" << endl;
+    cout << "1. º¸Åë¿¹±Ý°èÁÂ " << endl;
+    cout << "2. ½Å¿ë½Å·Ú°èÁÂ " << endl;
+    cout << "¼±ÅÃ: ";
+    cin >> select;
+
+    if (select == NORMAL)
+        MakeNormalAccount();
+    else
+        MakeCreditAccount();
+}
+
+void AccountHandler::MakeNormalAccount(void) {
     int id;
     char name[NAME_LEN];
     int balance;
+    int interestRate;
 
-    cout << "[ê³„ì¢Œê°œì„¤]" << endl;
-    cout << "ê³„ì¢Œ ID: "; cin >> id;
-    cout << "ì´ë¦„: "; cin >> name;
-    cout << "ìž…ê¸ˆì•¡: "; cin >> balance;
+    cout << "[º¸Åë¿¹±Ý°èÁÂ °³¼³]" << endl;
+    cout << "°èÁÂ ID: "; cin >> id;
+    cout << "ÀÌ¸§: "; cin >> name;
+    cout << "ÀÔ±Ý¾×: "; cin >> balance;
+    cout << "ÀÌÀÚÀ²: "; cin >> interestRate;
     cout << endl;
 
-    accountArr[accountNum++] = new Account(id, balance, name);
+    accountArr[accountNum++] = new NormalAccount(id, balance, name, interestRate);
+}
+
+void AccountHandler::MakeCreditAccount(void) {
+    int id;
+    char name[NAME_LEN];
+    int balance;
+    int interestRate;
+    int creditLevel;
+
+    cout << "[½Å¿ë½Å·Ú°èÁÂ °³¼³]" << endl;
+    cout << "°èÁÂ ID: "; cin >> id;
+    cout << "ÀÌ¸§: "; cin >> name;
+    cout << "ÀÔ±Ý¾×: "; cin >> balance;
+    cout << "ÀÌÀÚÀ²: "; cin >> interestRate;
+    cout << "½Å¿ëµî±Þ(1toA, 2toB, 3toC): "; cin >> creditLevel;
+    cout << endl;
+
+    switch(creditLevel) {
+        case 1:
+            accountArr[accountNum++] = new HighCreditAccount(id, balance, name, interestRate, LEVEL_A);
+            break;
+        case 2:
+            accountArr[accountNum++] = new HighCreditAccount(id, balance, name, interestRate, LEVEL_B);
+            break;
+        case 3:
+            accountArr[accountNum++] = new HighCreditAccount(id, balance, name, interestRate, LEVEL_C);
+    }
 }
 
 void AccountHandler::DepositMoney(void) {
     int money;
     int id;
-    cout << "[ìž…ê¸ˆ]" << endl;
-    cout << "ê³„ì¢Œ ID: "; cin >> id;
-    cout << "ìž…ê¸ˆì•¡: "; cin >> money;
+    cout << "[ÀÔ±Ý]" << endl;
+    cout << "°èÁÂ ID: "; cin >> id;
+    cout << "ÀÔ±Ý¾×: "; cin >> money;
 
     for (int i = 0; i < accountNum; i++) {
         if (accountArr[i]->GetAccountID() == id) {
             accountArr[i]->Deposit(money);
-            cout << "ìž…ê¸ˆì™„ë£Œ" << endl << endl;
+            cout << "ÀÔ±Ý¿Ï·á" << endl << endl;
             return;
         }
     }
@@ -144,17 +218,17 @@ void AccountHandler::DepositMoney(void) {
 void AccountHandler::WithdrawMoney(void) {
     int money;
     int id;
-    cout << "[ì¶œê¸ˆ]" << endl;
-    cout << "ê³„ì¢Œ ID: "; cin >> id;
-    cout << "ì¶œê¸ˆì•¡: "; cin >> money;
+    cout << "[Ãâ±Ý]" << endl;
+    cout << "°èÁÂ ID: "; cin >> id;
+    cout << "Ãâ±Ý¾×: "; cin >> money;
 
     for (int i = 0; i < accountNum; i++) {
         if (accountArr[i]->GetAccountID() == id) {
             if (accountArr[i]->Withdraw(money) == 0) {
-                cout << "ìž”ì•¡ë¶€ì¡±" << endl << endl;
+                cout << "ÀÜ¾×ºÎÁ·" << endl << endl;
                 return;
             }
-            cout << "ì¶œê¸ˆì™„ë£Œ" << endl;
+            cout << "Ãâ±Ý¿Ï·á" << endl;
             return;
         }
     }

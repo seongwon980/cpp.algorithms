@@ -69,7 +69,29 @@ class SalesWorker : public PermanentWorker {
         }
 };
 
+namespace RISK_LEVEL {
+    enum {RISK_A = 30, RISK_B = 20, RISK_C = 10};
+}
+class ForeignSalesWorker : public SalesWorker {
+    private:
+        const int riskLevel;
+    public:
+        ForeignSalesWorker(const char* _name, int _salary, double _bonusRatio, int _riskLevel)
+            : SalesWorker(_name, _salary, _bonusRatio), riskLevel(_riskLevel) {}
 
+        int GetRiskPay() const {
+            return (int)(SalesWorker::GetPay() * (riskLevel / 100.0));
+        }
+        int GetPay() const {
+            return SalesWorker::GetPay() + GetRiskPay();
+        }
+        void ShowSalaryInfo() const {
+            ShowYourName();
+            cout << "salary: " << SalesWorker::GetPay() << endl;
+            cout << "risk pay: " << GetRiskPay() << endl;
+            cout << "sum: " << GetPay() << endl << endl;
+        }
+};
 
 class EmployeeHandler {
     private:
@@ -98,18 +120,18 @@ class EmployeeHandler {
 
 int main(void) {
     EmployeeHandler handler;
-    handler.AddEmployee(new PermanentWorker("KIM", 1000));
-    handler.AddEmployee(new PermanentWorker("LEE", 1500));
-    
-    TemporaryWorker *alba = new TemporaryWorker("JUNG", 700);
-    alba->AddWorkTime(5);
-    handler.AddEmployee(alba);
+    ForeignSalesWorker* fseller1 = new ForeignSalesWorker("Hong", 1000, 0.1, RISK_LEVEL::RISK_A);
+    fseller1->AddSalesResult(7000);
+    handler.AddEmployee(fseller1);
 
-    SalesWorker *seller = new SalesWorker("HONG", 1000, 0.1);
-    seller->AddSalesResult(7000);
-    handler.AddEmployee(seller);
+    ForeignSalesWorker* fseller2 = new ForeignSalesWorker("Yoon", 1000, 0.1, RISK_LEVEL::RISK_B);
+    fseller2->AddSalesResult(7000);
+    handler.AddEmployee(fseller2);
+
+    ForeignSalesWorker* fseller3 = new ForeignSalesWorker("Lee", 1000, 0.1, RISK_LEVEL::RISK_C);
+    fseller3->AddSalesResult(7000);
+    handler.AddEmployee(fseller3);
 
     handler.ShowAllSalaryInfo();
-    handler.ShowTotalSalary();
     return 0;
 }
