@@ -9,17 +9,17 @@ class Point {
         void ShowPosition() const {
             cout << "[" << xpos << ", " << ypos << "]\n";
         }
+
         Point& operator++() {
             xpos += 1;
             ypos += 1;
             return *this;
         }
-
-        Point& operator-() {
-            xpos = (-1) * xpos;
-            ypos = (-1) * ypos;
+        
+        Point operator-() {
+            Point retPoint(xpos * -1, ypos * -1);
+            return retPoint;
         }
-
         friend Point& operator--(Point &ref);
         friend Point operator~(const Point &ref);
 };
