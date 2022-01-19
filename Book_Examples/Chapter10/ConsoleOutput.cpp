@@ -22,7 +22,7 @@ namespace mystd
     };
 
     ostream& endl(ostream &ostm) {
-        ostm <<'\n';
+        ostm << '\n';
         fflush(stdout);
         return ostm;
     }

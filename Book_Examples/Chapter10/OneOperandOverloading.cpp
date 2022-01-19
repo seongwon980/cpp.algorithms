@@ -15,6 +15,12 @@ class Point {
             ypos += 1;
             return *this;
         }
+
+        const Point operator++(int) {
+            const Point retPoint(xpos, ypos);
+            xpos += 1;
+            ypos += 1;
+        }
         
         Point operator-() {
             Point retPoint(xpos * -1, ypos * -1);
@@ -34,6 +40,7 @@ Point operator~(const Point &ref) {
     Point pos(ref.ypos, ref.xpos);
     return pos;
 }
+
 
 int main(void) {
     Point pos(1, 2);
