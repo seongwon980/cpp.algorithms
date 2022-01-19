@@ -13,9 +13,9 @@ bool isPrime(int num) {
 }
 
 int main(void) {
-    // ios_base::sync_with_stdio(false);
-    // cin.tie(NULL);
-    // cout.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
     int num_of_tc;
     int num;
     cin >> num_of_tc;
