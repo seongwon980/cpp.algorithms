@@ -28,26 +28,38 @@ class Police {
                     pistol = NULL;
         }
 
-        Police(const Police& ref) {
+        Police(const Police &ref) {
+            // 복사 생성자는 return값이 없다. (생성자니까)
+            // 항상 shallow-copy와 deep-copy를 주의하자.
             handcuffs = ref.handcuffs;
-            if (ref.pistol == NULL)
-                pistol = new Gun(*(ref.pistol));
-            else
+
+            if (ref.pistol == NULL) {
                 pistol = NULL;
+            } else {
+                pistol = new Gun(*(ref.pistol));
+            }
         }
 
-        Police& operator=(const Police& ref) {
-            handcuffs = ref.handcuffs;
+        Police& operator=(const Police &ref) {
+            // 대입 연산자는 return값이 있다. (연속적인 대입을 위함)
+            // 대입 연산자는 메모리 누수에 주의해야 한다.
+            // 항상 shallow-copy와 deep-copy를 주의하자.
+
+            // 원본 객체 메모리 해제
             if (pistol != NULL)
                 delete pistol;
             
-            if (ref.pistol != NULL)
-                pistol = new Gun(*(ref.pistol));
-            else
+            // 대입할 객체의 참조 변수는 deep-copy를 해줘야 한다.
+            handcuffs = ref.handcuffs;
+            if (ref.pistol == NULL)
                 pistol = NULL;
-            
+            else
+                pistol = new Gun(*(ref.pistol));
+
             return *this;
         }
+
+        
 
         void PutHancuff() {
             cout << "SNAP!" << endl;

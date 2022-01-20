@@ -17,12 +17,11 @@ class Book {
                 strcpy(isbn, _isbn);
         }
 
-        Book(const Book &ref)
-            : price(ref.price) {
-                title = new char[strlen(ref.title) + 1];
-                isbn = new char[strlen(ref.isbn) + 1];
-                strcpy(title, ref.title);
-                strcpy(isbn, ref.isbn);
+        Book(const Book &ref) : price(ref.price) {
+            title = new char[strlen(ref.title)];
+            isbn = new char[strlen(ref.isbn)];
+            strcpy(title, ref.title);
+            strcpy(isbn, ref.isbn);
         }
 
         Book& operator=(const Book &ref) {
@@ -33,8 +32,9 @@ class Book {
             isbn = new char[strlen(ref.isbn)];
             strcpy(title, ref.title);
             strcpy(isbn, ref.isbn);
+
             return *this;
-        }
+        } 
         
         void ShowBookInfo() {
             cout << "Title: " << title << endl;
@@ -63,14 +63,16 @@ class EBook : public Book {
             DRMKey = new char[strlen(ref.DRMKey) + 1];
             strcpy(DRMKey, ref.DRMKey);
         }
-        
+
         EBook& operator=(const EBook &ref) {
             Book::operator=(ref);
             delete []DRMKey;
             DRMKey = new char[strlen(ref.DRMKey) + 1];
             strcpy(DRMKey, ref.DRMKey);
-            return *this;
+
+            return *this; 
         }
+
         void ShowEBookInfo() {
             ShowBookInfo();
             cout << "DRM: " << DRMKey << endl;
