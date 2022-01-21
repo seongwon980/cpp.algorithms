@@ -10,7 +10,8 @@ class Account {
     public:
         Account(int _accountID, int _balance, const char* _customerName);
         Account(const Account &ref);
-
+        Account& operator=(const Account &ref);
+        
         int GetAccountID() const;
         virtual void Deposit(int money);
         int WithDraw(int money);

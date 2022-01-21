@@ -6,19 +6,19 @@
 
 void AccountHandler::ShowMenu(void) const {
     cout << "========= Menu =========" << endl;
-    cout << "1. °èÁÂ°³¼³" << endl;
-    cout << "2. ÀÔ±Ý" << endl;
-    cout << "3. Ãâ±Ý" << endl;
-    cout << "4. °èÁÂ¹øÈ£ ÀüÃ¼ Ãâ·Â" << endl;
-    cout << "5. ÇÁ·Î±×·¥ Á¾·á" << endl;
+    cout << "1. ê³„ì¢Œê°œì„¤" << endl;
+    cout << "2. ìž…ê¸ˆ" << endl;
+    cout << "3. ì¶œê¸ˆ" << endl;
+    cout << "4. ê³„ì¢Œë²ˆí˜¸ ì „ì²´ ì¶œë ¥" << endl;
+    cout << "5. í”„ë¡œê·¸ëž¨ ì¢…ë£Œ" << endl;
 }
 
 void AccountHandler::MakeAccount(void) {
     int select;
-    cout << "[°èÁÂÁ¾·ù¼±ÅÃ]" << endl;
-    cout << "1. º¸Åë¿¹±Ý°èÁÂ" << endl;
-    cout << "2. ½Å¿ë½Å·Ú°èÁÂ" << endl;
-    cout << "¼±ÅÃ : ";
+    cout << "[ê³„ì¢Œì¢…ë¥˜ì„ íƒ]" << endl;
+    cout << "1. ë³´í†µì˜ˆê¸ˆê³„ì¢Œ" << endl;
+    cout << "2. ì‹ ìš©ì‹ ë¢°ê³„ì¢Œ" << endl;
+    cout << "ì„ íƒ : ";
     cin >> select;
 
     if (select == NORMAL)
@@ -33,11 +33,11 @@ void AccountHandler::MakeNormalAccount(void) {
     int balance;
     int interestRate;
 
-    cout << "[º¸Åë¿¹±Ý°èÁÂ °³¼³]" << endl;
-    cout << "°èÁÂ ID: "; cin >> accountID;
-    cout << "ÀÌ¸§: "; cin >> customerName;
-    cout << "ÀÔ±Ý¾×: "; cin >> balance;
-    cout << "ÀÌÀÚÀ²: "; cin >> interestRate;
+    cout << "[ë³´í†µì˜ˆê¸ˆê³„ì¢Œ ê°œì„¤]" << endl;
+    cout << "ê³„ì¢Œ ID: "; cin >> accountID;
+    cout << "ì´ë¦„: "; cin >> customerName;
+    cout << "ìž…ê¸ˆì•¡: "; cin >> balance;
+    cout << "ì´ìžìœ¨: "; cin >> interestRate;
     cout << endl;
 
     accountArr[accountNum++] = new NormalAccount(accountID, balance, customerName, interestRate);
@@ -50,12 +50,12 @@ void AccountHandler::MakeCreditAccount(void) {
     int interestRate;
     int creditLevel;
 
-    cout << "[½Å¿ë½Å·Ú°èÁÂ °³¼³]" << endl;
-    cout << "°èÁÂ ID: "; cin >> accountID;
-    cout << "ÀÌ¸§: "; cin >> customerName;
-    cout << "ÀÔ±Ý¾×: "; cin >> balance;
-    cout << "ÀÌÀÚÀ²: "; cin >> interestRate;
-    cout << "½Å¿ëµî±Þ(1toA, 2toB, 3toC): "; cin >> creditLevel;
+    cout << "[ì‹ ìš©ì‹ ë¢°ê³„ì¢Œ ê°œì„¤]" << endl;
+    cout << "ê³„ì¢Œ ID: "; cin >> accountID;
+    cout << "ì´ë¦„: "; cin >> customerName;
+    cout << "ìž…ê¸ˆì•¡: "; cin >> balance;
+    cout << "ì´ìžìœ¨: "; cin >> interestRate;
+    cout << "ì‹ ìš©ë“±ê¸‰(1toA, 2toB, 3toC): "; cin >> creditLevel;
     cout << endl;
 
     switch(creditLevel) {
@@ -73,38 +73,38 @@ void AccountHandler::MakeCreditAccount(void) {
 void AccountHandler::DepositMoney(void) {
     int money;
     int accountID;
-    cout << "[ÀÔ±Ý]" << endl;
-    cout << "°èÁÂ ID: "; cin >> accountID;
-    cout << "ÀÔ±Ý¾×: "; cin >> money;
+    cout << "[ìž…ê¸ˆ]" << endl;
+    cout << "ê³„ì¢Œ ID: "; cin >> accountID;
+    cout << "ìž…ê¸ˆì•¡: "; cin >> money;
 
     for (int i = 0; i < accountNum; i++) {
         if (accountArr[i]->GetAccountID() == accountID) {
             accountArr[i]->Deposit(money);
-            cout << "ÀÔ±Ý ¿Ï·á" << endl << endl;
+            cout << "ìž…ê¸ˆ ì™„ë£Œ" << endl << endl;
             return;
         }
     }
-    cout << "À¯È¿ÇÏÁö ¾ÊÀº IDÀÔ´Ï´Ù. " << endl << endl;
+    cout << "ìœ íš¨í•˜ì§€ ì•Šì€ IDìž…ë‹ˆë‹¤. " << endl << endl;
 }
 
 void AccountHandler::WithdrawMoney(void) {
     int money;
     int accountID;
-    cout << "[Ãâ±Ý]" << endl;
-    cout << "°èÁÂ ID: "; cin >> accountID;
-    cout << "Ãâ±Ý¾×: "; cin >> money;
+    cout << "[ì¶œê¸ˆ]" << endl;
+    cout << "ê³„ì¢Œ ID: "; cin >> accountID;
+    cout << "ì¶œê¸ˆì•¡: "; cin >> money;
 
     for (int i = 0; i < accountNum; i++) {
         if (accountArr[i]->GetAccountID() == accountID) {
             if (accountArr[i]->WithDraw(money) == 0) {
-                cout << "ÀÜ¾×ºÎÁ·" << endl << endl;
+                cout << "ìž”ì•¡ë¶€ì¡±" << endl << endl;
                 return;
             }
-            cout << "Ãâ±Ý¿Ï·á" << endl << endl;
+            cout << "ì¶œê¸ˆì™„ë£Œ" << endl << endl;
             return;
         }
     }
-    cout << "À¯È¿ÇÏÁö ¾ÊÀº IDÀÔ´Ï´Ù." << endl << endl;
+    cout << "ìœ íš¨í•˜ì§€ ì•Šì€ IDìž…ë‹ˆë‹¤." << endl << endl;
 }
 
 AccountHandler::AccountHandler() : accountNum(0) {}

@@ -11,7 +11,17 @@ Account::Account(const Account &ref)
     : accountID(ref.accountID), balance(ref.balance) {
         customerName = new char[strlen(ref.customerName) + 1];
         strcpy(customerName, ref.customerName);
-    }
+}
+
+Account& Account::operator=(const Account &ref) {
+    accountID = ref.accountID;
+    balance = ref.balance;
+
+    delete []customerName;
+    customerName = new char[strlen(ref.customerName) + 1];
+    strcpy(customerName, ref.customerName);
+    return *this;
+}
 
 int Account::GetAccountID() const {
     return accountID;

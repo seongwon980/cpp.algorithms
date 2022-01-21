@@ -7,7 +7,7 @@ int main(void) {
 
     while(true) {
         manager.ShowMenu();
-        cout << "¼±ÅÃ: ";
+        cout << "Select: ";
         cin >> choice;
         cout << endl;
 
