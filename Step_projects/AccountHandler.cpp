@@ -3,6 +3,7 @@
 #include "Account.h"
 #include "NormalAccount.h"
 #include "HighCreditAccount.h"
+#include "String.h"
 
 void AccountHandler::ShowMenu(void) const {
     cout << "========= Menu =========" << endl;
@@ -29,7 +30,8 @@ void AccountHandler::MakeAccount(void) {
 
 void AccountHandler::MakeNormalAccount(void) {
     int accountID;
-    char customerName[NAME_LEN];
+    // char customerName[NAME_LEN];
+    String customerName;
     int balance;
     int interestRate;
 
@@ -45,7 +47,8 @@ void AccountHandler::MakeNormalAccount(void) {
 
 void AccountHandler::MakeCreditAccount(void) {
     int accountID;
-    char customerName[NAME_LEN];
+    // char customerName[NAME_LEN];
+    String customerName;
     int balance;
     int interestRate;
     int creditLevel;
