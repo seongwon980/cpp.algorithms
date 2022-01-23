@@ -1,3 +1,9 @@
+/*
+ * ÆÄÀÏÀÌ¸§: AccountHandler.cpp
+ * ÀÛ¼ºÀÚ: À±¼º¿ì
+ * ¾÷µ¥ÀÌÆ® Á¤º¸: [2010, 03, 01] ÆÄÀÏ¹öÀü 0.8 
+ */
+
 #include "BankingCommonDecl.h"
 #include "AccountHandler.h"
 #include "Account.h"
@@ -5,122 +11,136 @@
 #include "HighCreditAccount.h"
 #include "String.h"
 
-void AccountHandler::ShowMenu(void) const {
-    cout << "========= Menu =========" << endl;
-    cout << "1. ê³„ì¢Œê°œì„¤" << endl;
-    cout << "2. ìž…ê¸ˆ" << endl;
-    cout << "3. ì¶œê¸ˆ" << endl;
-    cout << "4. ê³„ì¢Œë²ˆí˜¸ ì „ì²´ ì¶œë ¥" << endl;
-    cout << "5. í”„ë¡œê·¸ëž¨ ì¢…ë£Œ" << endl;
+void AccountHandler::ShowMenu(void) const
+{
+	cout<<"-----Menu------"<<endl;
+	cout<<"1. °èÁÂ°³¼³"<<endl;
+	cout<<"2. ÀÔ    ±Ý"<<endl;
+	cout<<"3. Ãâ    ±Ý"<<endl;
+	cout<<"4. °èÁÂÁ¤º¸ ÀüÃ¼ Ãâ·Â"<<endl;
+	cout<<"5. ÇÁ·Î±×·¥ Á¾·á"<<endl;
 }
 
-void AccountHandler::MakeAccount(void) {
-    int select;
-    cout << "[ê³„ì¢Œì¢…ë¥˜ì„ íƒ]" << endl;
-    cout << "1. ë³´í†µì˜ˆê¸ˆê³„ì¢Œ" << endl;
-    cout << "2. ì‹ ìš©ì‹ ë¢°ê³„ì¢Œ" << endl;
-    cout << "ì„ íƒ : ";
-    cin >> select;
-
-    if (select == NORMAL)
-        MakeNormalAccount();
-    else
-        MakeCreditAccount();
+void AccountHandler::MakeAccount(void)
+{
+	int sel;
+	cout<<"[°èÁÂÁ¾·ù¼±ÅÃ]"<<endl;
+	cout<<"1.º¸Åë¿¹±Ý°èÁÂ ";
+	cout<<"2.½Å¿ë½Å·Ú°èÁÂ "<<endl;
+	cout<<"¼±ÅÃ: ";
+	cin>>sel;
+	
+	if(sel==NORMAL)
+		MakeNormalAccount();
+	else
+		MakeCreditAccount();
 }
 
-void AccountHandler::MakeNormalAccount(void) {
-    int accountID;
-    // char customerName[NAME_LEN];
-    String customerName;
-    int balance;
-    int interestRate;
+void AccountHandler::MakeNormalAccount(void)
+{
+	int id;
+	String name;
+	int balance;
+	int interRate;
 
-    cout << "[ë³´í†µì˜ˆê¸ˆê³„ì¢Œ ê°œì„¤]" << endl;
-    cout << "ê³„ì¢Œ ID: "; cin >> accountID;
-    cout << "ì´ë¦„: "; cin >> customerName;
-    cout << "ìž…ê¸ˆì•¡: "; cin >> balance;
-    cout << "ì´ìžìœ¨: "; cin >> interestRate;
-    cout << endl;
+	cout<<"[º¸Åë¿¹±Ý°èÁÂ °³¼³]"<<endl;
+	cout<<"°èÁÂID: ";	cin>>id;
+	cout<<"ÀÌ  ¸§: ";	cin>>name;
+	cout<<"ÀÔ±Ý¾×: ";	cin>>balance;
+	cout<<"ÀÌÀÚÀ²: ";	cin>>interRate;
+	cout<<endl;
 
-    accountArr[accountNum++] = new NormalAccount(accountID, balance, customerName, interestRate);
+	accArr[accNum++]=new NormalAccount(id, balance, name, interRate);
 }
 
-void AccountHandler::MakeCreditAccount(void) {
-    int accountID;
-    // char customerName[NAME_LEN];
-    String customerName;
-    int balance;
-    int interestRate;
-    int creditLevel;
+void AccountHandler::MakeCreditAccount(void)
+{
+	int id;
+	String name;
+	int balance;
+	int interRate;
+	int creditLevel;
 
-    cout << "[ì‹ ìš©ì‹ ë¢°ê³„ì¢Œ ê°œì„¤]" << endl;
-    cout << "ê³„ì¢Œ ID: "; cin >> accountID;
-    cout << "ì´ë¦„: "; cin >> customerName;
-    cout << "ìž…ê¸ˆì•¡: "; cin >> balance;
-    cout << "ì´ìžìœ¨: "; cin >> interestRate;
-    cout << "ì‹ ìš©ë“±ê¸‰(1toA, 2toB, 3toC): "; cin >> creditLevel;
-    cout << endl;
+	cout<<"[½Å¿ë½Å·Ú°èÁÂ °³¼³]"<<endl;
+	cout<<"°èÁÂID: ";	cin>>id;
+	cout<<"ÀÌ  ¸§: ";	cin>>name;
+	cout<<"ÀÔ±Ý¾×: ";	cin>>balance;
+	cout<<"ÀÌÀÚÀ²: ";	cin>>interRate;
+	cout<<"½Å¿ëµî±Þ(1toA, 2toB, 3toC): ";	cin>>creditLevel;
+	cout<<endl;
 
-    switch(creditLevel) {
-        case 1:
-            accountArr[accountNum++] = new HighCreditAccount(accountID, balance, customerName, interestRate, LEVEL_A);
-            break;
-        case 2:
-            accountArr[accountNum++] = new HighCreditAccount(accountID, balance, customerName, interestRate, LEVEL_B);
-            break;
-        case 3:
-            accountArr[accountNum++] = new HighCreditAccount(accountID, balance, customerName, interestRate, LEVEL_C);
-    }
+	switch(creditLevel)
+	{
+	case 1:
+		accArr[accNum++]=new HighCreditAccount(id, balance, name, interRate, LEVEL_A);
+		break;
+	case 2:
+		accArr[accNum++]=new HighCreditAccount(id, balance, name, interRate, LEVEL_B);
+		break;
+	case 3:
+		accArr[accNum++]=new HighCreditAccount(id, balance, name, interRate, LEVEL_C);
+	}
 }
 
-void AccountHandler::DepositMoney(void) {
-    int money;
-    int accountID;
-    cout << "[ìž…ê¸ˆ]" << endl;
-    cout << "ê³„ì¢Œ ID: "; cin >> accountID;
-    cout << "ìž…ê¸ˆì•¡: "; cin >> money;
-
-    for (int i = 0; i < accountNum; i++) {
-        if (accountArr[i]->GetAccountID() == accountID) {
-            accountArr[i]->Deposit(money);
-            cout << "ìž…ê¸ˆ ì™„ë£Œ" << endl << endl;
-            return;
-        }
-    }
-    cout << "ìœ íš¨í•˜ì§€ ì•Šì€ IDìž…ë‹ˆë‹¤. " << endl << endl;
+void AccountHandler::DepositMoney(void)
+{
+	int money;
+	int id;
+	cout<<"[ÀÔ    ±Ý]"<<endl;
+	cout<<"°èÁÂID: ";	cin>>id;
+	cout<<"ÀÔ±Ý¾×: ";	cin>>money;
+	
+	for(int i=0; i<accNum; i++)
+	{
+		if(accArr[i]->GetAccID()==id)
+		{
+			accArr[i]->Deposit(money);
+			cout<<"ÀÔ±Ý¿Ï·á"<<endl<<endl;
+			return;
+		}
+	}
+	cout<<"À¯È¿ÇÏÁö ¾ÊÀº ID ÀÔ´Ï´Ù."<<endl<<endl;
 }
 
-void AccountHandler::WithdrawMoney(void) {
-    int money;
-    int accountID;
-    cout << "[ì¶œê¸ˆ]" << endl;
-    cout << "ê³„ì¢Œ ID: "; cin >> accountID;
-    cout << "ì¶œê¸ˆì•¡: "; cin >> money;
+void AccountHandler::WithdrawMoney(void)
+{
+	int money;
+	int id;
+	cout<<"[Ãâ    ±Ý]"<<endl;
+	cout<<"°èÁÂID: ";	cin>>id;
+	cout<<"Ãâ±Ý¾×: ";	cin>>money;
+	
+	for(int i=0; i<accNum; i++)
+	{
+		if(accArr[i]->GetAccID()==id)
+		{
+			if(accArr[i]->Withdraw(money)==0)
+			{
+				cout<<"ÀÜ¾×ºÎÁ·"<<endl<<endl;
+				return;
+			}
 
-    for (int i = 0; i < accountNum; i++) {
-        if (accountArr[i]->GetAccountID() == accountID) {
-            if (accountArr[i]->WithDraw(money) == 0) {
-                cout << "ìž”ì•¡ë¶€ì¡±" << endl << endl;
-                return;
-            }
-            cout << "ì¶œê¸ˆì™„ë£Œ" << endl << endl;
-            return;
-        }
-    }
-    cout << "ìœ íš¨í•˜ì§€ ì•Šì€ IDìž…ë‹ˆë‹¤." << endl << endl;
+			cout<<"Ãâ±Ý¿Ï·á"<<endl<<endl;
+			return;
+		}
+	}
+	cout<<"À¯È¿ÇÏÁö ¾ÊÀº ID ÀÔ´Ï´Ù."<<endl<<endl;
 }
 
-AccountHandler::AccountHandler() : accountNum(0) {}
+AccountHandler::AccountHandler() : accNum(0)
+{  }
 
-void AccountHandler::ShowAllAccountInfo(void) const {
-    for (int i = 0; i < accountNum; i++) {
-        accountArr[i]->ShowAccountInfo();
-        cout << endl;
-    }
+void AccountHandler::ShowAllAccInfo(void) const
+{
+	for(int i=0; i<accNum; i++)
+	{
+		accArr[i]->ShowAccInfo();
+		cout<<endl;
+	}
 }
 
-AccountHandler::~AccountHandler() {
-    for (int i = 0; i < accountNum; i++) {
-        delete accountArr[i];
-    }
+AccountHandler::~AccountHandler()
+{
+	for(int i=0; i<accNum; i++)
+		delete accArr[i];
 }

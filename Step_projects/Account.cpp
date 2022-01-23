@@ -1,51 +1,37 @@
-#include "Account.h"
-#include "String.h"
+/*
+ * 파일이름: Account.cpp
+ * 작성자: 윤성우
+ * 업데이트 정보: [2010, 03, 01] 파일버전 0.9 
+ */
+
 #include "BankingCommonDecl.h"
+#include "Account.h"
 
-Account::Account(int _accountID, int _balance, String _customerName)
-    : accountID(_accountID), balance(_balance) {
-        // customerName = new char[strlen(_customerName) + 1];
-        // strcpy(customerName, _customerName);
-        customerName = _customerName;
-    }
-
-// Account::Account(const Account &ref)
-//     : accountID(ref.accountID), balance(ref.balance) {
-//         customerName = new char[strlen(ref.customerName) + 1];
-//         strcpy(customerName, ref.customerName);
-// }
-
-// Account& Account::operator=(const Account &ref) {
-//     accountID = ref.accountID;
-//     balance = ref.balance;
-
-//     delete []customerName;
-//     customerName = new char[strlen(ref.customerName) + 1];
-//     strcpy(customerName, ref.customerName);
-//     return *this;
-// }
-
-int Account::GetAccountID() const {
-    return accountID;
+Account::Account(int ID, int money, String name)
+	: accID(ID), balance(money)
+{
+	cusName=name;
 }
 
-void Account::Deposit(int money) {
-    balance += money;
+int Account::GetAccID() const { return accID; }
+
+void Account::Deposit(int money)
+{
+	balance+=money;
 }
 
-int Account::WithDraw(int money) {
-    if (balance < money)
-        return 0;
-    balance -= money;
-    return money;
+int Account::Withdraw(int money)
+{
+	if(balance<money)
+		return 0;
+	
+	balance-=money;
+	return money;
 }
 
-void Account::ShowAccountInfo() const {
-    cout << "ID: " << accountID << endl;
-    cout << "Name: " << customerName << endl;
-    cout << "Balance: " << balance << endl;
+void Account::ShowAccInfo() const 
+{
+	cout<<"계좌ID: "<<accID<<endl;
+	cout<<"이  름: "<<cusName<<endl;
+	cout<<"잔  액: "<<balance<<endl;
 }
-
-// Account::~Account() {
-//     delete []customerName;
-// }

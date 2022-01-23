@@ -1,81 +1,86 @@
+/*
+ * 파일이름: String.cpp
+ * 작성자: 윤성우
+ * 업데이트 정보: [2010, 03, 01] 파일버전 0.1
+ */
+
 #include "String.h"
 
-String::String() {
-    len = 0;
-    str = NULL;
+String::String()
+{
+	len=0;
+	str=NULL;
 }
 
-String::String(const char* s) {
-    len = strlen(s) + 1;
-    str = new char[len];
-    strcpy(str, s);
+String::String(const char* s)
+{
+	len=strlen(s)+1;
+	str=new char[len];
+	strcpy(str, s);
 }
 
-String::String(const String &ref) {
-    // Copy constructor
-    len = ref.len;
-    str = new char[len];
-    strcpy(str, ref.str);
+String::String(const String& s)
+{
+	len=s.len;
+	str=new char[len];
+	strcpy(str, s.str);
 }
 
-String::~String() {
-    // Destructor
-    if (str != NULL)
-        delete []str;
+String::~String() 
+{
+	if(str!=NULL)
+		delete []str; 
 }
 
-String& String::operator= (const String &ref) {
-    // Memory deallocation
-    if (str != NULL)
-        delete []str;
-    
-    // Copy instance variables
-    len = ref.len;
-    str = new char[len];
-    strcpy(str, ref.str);
-
-    // return reference
-    return *this;
+String& String::operator= (const String& s)
+{
+	if(str!=NULL)
+		delete []str;
+	len=s.len;
+	str=new char[len];
+	strcpy(str, s.str);
+	return *this;
 }
 
-String& String::operator+= (const String &ref) {
-    len += (ref.len - 1);
-    char* tempStr = new char[len];
-    strcpy(tempStr, str);
-    strcat(tempStr, ref.str);
+String& String::operator+= (const String& s)
+{
+	len+=(s.len-1);
+	char* tempstr=new char[len];
+	strcpy(tempstr, str);
+	strcat(tempstr, s.str);
 
-    // Memory deallocation
-    if (str != NULL)
-        delete []str;
-    str = tempStr;
-    return *this;
+	if(str!=NULL)
+		delete []str;
+	str=tempstr;
+	return *this;
 }
 
-bool String::operator== (const String &ref) {
-    return strcmp(str, ref.str) ? false : true;
+bool String::operator== (const String& s)
+{
+	return strcmp(str, s.str) ? false : true;
 }
 
-String String::operator+ (const String &ref) {
-    char* tempStr = new char[len + ref.len - 1];
-    strcpy(tempStr, str);
-    strcat(tempStr, ref.str);
-
-    // Create a new String object and return the copy.
-    String temp(tempStr);
-
-    // Memory deallocation
-    delete []tempStr;
-    return temp;
+String String::operator+ (const String& s)
+{
+	char* tempstr=new char[len+s.len-1];
+	strcpy(tempstr, str);
+	strcat(tempstr, s.str);
+	
+	String temp(tempstr);
+	delete []tempstr;
+	return temp;
 }
 
-ostream& operator<< (ostream& os, const String &ref) {
-    os << ref.str;
-    return os;
+ostream& operator<< (ostream& os, const String& s)
+{
+	os<<s.str;
+	return os;
 }
 
-istream& operator>> (istream& is, String &ref) {
-    char str[100];
-    is >> str;
-    ref = String(str);
-    return is;
+istream& operator>> (istream& is, String& s)
+{
+	char str[100];
+	is>>str;
+	s=String(str);
+	return is;
 }
