@@ -13,7 +13,7 @@ class DepositException : public AccountException {
     public:
         DepositException(int money) : reqDep(money) {}
         void ShowExceptionReason() {
-            cout << "[예외 메시지: " << reqDep << "는 입금불가]" << endl;
+            cout << "[예외 메시지 : " << reqDep << "는 입금불가]" << endl;
         }
 };
 
@@ -23,7 +23,7 @@ class WithdrawException : public AccountException {
     public:
         WithdrawException(int money) : balance(money) {}
         void ShowExceptionReason() {
-            cout << "[예외 메시지: 잔액 " << balance << ", 잔액부족]" << endl;
+            cout << "[예외 메시지 : 잔액 " << balance << ", 잔액부족" << endl;
         }
 };
 
@@ -32,8 +32,8 @@ class Account {
         char accNum[50];
         int balance;
     public:
-        Account(const char* str, int money) : balance(money) {
-            strcpy(accNum, str);
+        Account(const char* acc, int money) : balance(money) {
+            strcpy(accNum, acc);
         }
 
         void Deposit(int money) {
@@ -49,6 +49,7 @@ class Account {
                 throw WithdrawException(balance);
             balance -= money;
         }
+        
         void ShowMyMoney() {
             cout << "잔고: " << balance << endl << endl;
         }
@@ -56,6 +57,7 @@ class Account {
 
 int main(void) {
     Account myAcc("56789-827120", 5000);
+
     try {
         myAcc.Deposit(2000);
         myAcc.Deposit(-300);
