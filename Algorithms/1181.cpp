@@ -9,10 +9,10 @@ bool compareStr(string& s1, string& s2) {
     if (s1.length() < s2.length()) {
         return true;
     } else if (s1.length() == s2.length()) {
-        if (s1.compare(s2) > 0) {
-            return false;
-        } else {
+        if (s1.compare(s2) < 0) {
             return true;
+        } else {
+            return false;
         }
     } else {
         return false;
