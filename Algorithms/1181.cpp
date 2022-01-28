@@ -5,11 +5,20 @@
 
     using namespace std;
 
+<<<<<<< HEAD
     bool compareStr(string& s1, string& s2) {
         if (s1.length() < s2.length()) {
             return true;
         } else if (s1.length() == s2.length()) {
             return s1 < s2;
+=======
+bool compareStr(string& s1, string& s2) {
+    if (s1.length() < s2.length()) {
+        return true;
+    } else if (s1.length() == s2.length()) {
+        if (s1.compare(s2) < 0) {
+            return true;
+>>>>>>> e65e35d684d7772d0e95df08fb7719be23542dca
         } else {
             return false;
         }
