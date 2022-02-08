@@ -58,6 +58,7 @@ int main(void) {
     denominator_2 = get_2(num1 - num2) + get_2(num2);
     denominator_5 = get_5(num1 - num2) + get_5(num2);
 
+
     // 총 2와 5의 수를 구해서 둘 중 작은 수로 맞춰주면 된다.
     // 2^5 * 5^8이면 10이 8개가 아닌 5개 있기 때문이다.
     total_2 = numerator_2 - denominator_2;
