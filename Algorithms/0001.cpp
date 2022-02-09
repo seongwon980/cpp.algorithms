@@ -1,10 +1,15 @@
 #include <iostream>
+#include <cstring>
 #include <cmath>
 using namespace std;
 
 int main(void) {
-    int arr[5] = {3, 1, 4, 5, 7};
-    cout << pow(2, 3) << "\n";
+    int num1, num2;
+    
+    cin >> num1 >> num2;
+
+    cout << num1 / num2 << endl;
+    cout << num1 % num2 << endl;
 
     return 0;
 }
