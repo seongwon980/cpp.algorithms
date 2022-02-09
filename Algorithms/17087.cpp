@@ -14,9 +14,6 @@ int GetGCD(int num1, int num2) {
 }
 
 int main(void) {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
 
     // S로부터 A1, A2, ..., An까지 떨어진 거리를 각각 d1, d2, ..., dn이라고 하면
     // d1 ~ dn의 GCD가 결국 답이 된다. 점프해서 갈 수 있다는 것은 알고보면 점프의
