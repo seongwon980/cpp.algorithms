@@ -7,15 +7,15 @@ MatchMaker::MatchMaker(string input_path) {
     string line;
 
     if (i_f.is_open()) {
-        getline(i_f, line);
-        ref_len = line.length();
-        ref_str = new char[ref_len];
-        strcpy(ref_str, line.c_str());
+        getline(i_f, line);     // 한 줄을 읽어서 string line에 저장
+        ref_len = line.length();    
+        ref_str = new char[ref_len];    // 읽은 line의 길이만큼의 char 배열을 생성
+        strcpy(ref_str, line.c_str());     // line을 ref_str에 복사
 
         int i = 0;
         getline(i_f, line);
-        output_len = stoi(line);
-        query = new char*[output_len];
+        output_len = stoi(line);    // Query를 할 단어의 수를 입력
+        query = new char*[output_len];   // char형 포인터 배열을 생성
         query_len = new int[output_len];
         while (getline(i_f, line)) {
             query_len[i] = line.length();
@@ -51,7 +51,7 @@ void MatchMaker::Match() {
     // You should store the answer in 'output' vector
 
     /* Code Start */
-
+    
 
     /* Code End */    
     
