@@ -51,7 +51,7 @@ void MatchMaker::Match() {
     // You should store the answer in 'output' vector
 
     /* Code Start */
-    
+    output = new int[output_len];
 
     /* Code End */    
     
