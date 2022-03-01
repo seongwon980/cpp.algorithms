@@ -2,15 +2,31 @@
 
 using namespace std;
 
+int count_occurences(char* ref_str, int ref_str_len, char* query_str, int query_str_len) {
+    int count = 0;
+    for (int i = 0; i <= ref_str_len - query_str_len; i++) {
+        int j;
+        for (j = 0; j < query_str_len; j++) {
+            if (ref_str[i + j] != query_str[j]) break;
+        }
+        
+        if (j == query_str_len) count++;
+    }
+    
+    return count;
+}
+
 MatchMaker::MatchMaker(string input_path) {
+    cout << "Open!";
     ifstream i_f(input_path);
     string line;
 
     if (i_f.is_open()) {
-        getline(i_f, line);     // 한 줄을 읽어서 string line에 저장
+        cout << "FIle opened!";
+        getline(i_f, line);
         ref_len = line.length();    
-        ref_str = new char[ref_len];    // 읽은 line의 길이만큼의 char 배열을 생성
-        strcpy(ref_str, line.c_str());     // line을 ref_str에 복사
+        ref_str = new char[ref_len];
+        strcpy(ref_str, line.c_str());
 
         int i = 0;
         getline(i_f, line);
@@ -52,7 +68,11 @@ void MatchMaker::Match() {
 
     /* Code Start */
     output = new int[output_len];
-
+    
+    for (int i = 0; i < output_len; i++) {
+        output[i] = count_occurences(ref_str, ref_len, query[i], query_len[i]);
+    }
+    
     /* Code End */    
     
     // Editing is Prohibited
