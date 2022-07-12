@@ -12,28 +12,28 @@ int main(void) {
     int* query_len;
     int output_len;
 
-
     ref_str = "boatboatboatboatboatboatboatchickenchicchicchicchic";
+    string ref_str_string(ref_str);
+    int num = 10;
     
     query = new char*[3];
+    output = new int[3];
+    query_len = new int[3];
+    query[0] = 4;
+    query[1] = 7;
+    query[2] = 4;
+    
     query[0] = "boat";
     query[1] = "chicken";
     query[2] = "chic";
 
-    output = new int[3];
-    ref_len = sizeof(ref_str);
-    
-    query_len = new int[3];
-    query_len[0] = 4;
-    query_len[1] = 7;
-    query_len[2] = 4;
-
-    output_len = 3;
-
-
-
     for (int i = 0; i < 3; i++)
         cout << query[i] << "\n";
 
+    for (int i = 0; i < 3; i++) {
+        
+        
+        cout << count << " ";
+    }
     return 0;
 }
